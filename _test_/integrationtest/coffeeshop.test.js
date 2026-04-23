@@ -1,43 +1,40 @@
-// import { describe, test, expect } from "vitest";
-// import { createPizza, orderPizza, sendOrder } from "./pizzashop";
 
-// describe("Pizza Shop Unit Tests", () => {
-//   test("createPizza returns correct type and price", () => {
-//     const pizza = createPizza("margherita");
+import { createCoffee, prepareOrder, processPayment, orderDrink } from "../../src/integrationJS/coffeeshop";
+import { describe, test, expect } from "vitest";
 
-//     expect(pizza).toEqual({ type: "margherita", price: 100 });
-//   });
+describe("Coffee Shop unit Test", () => {
+  test("createCoffee returns correct type and price for known type", () => {
+    const coffee = createCoffee("latte");
+    expect(coffee).toEqual({ type: "latte", price: 40 });
+  });
 
-//   test("createPizza returns undefined price for unknown type", () => {
-//     const pizza = createPizza("hawaii");
 
-//     expect(pizza).toEqual({ type: "hawaii", price: undefined });
-//   });
+  test("createCoffee returns undefined price for unknown type", () => {
+    const coffee = createCoffee("mocha");
+    expect(coffee).toEqual({ type: "mocha", price: undefined });
+  });
 
-//   test("sendOrder returns a numeric order id", () => {
-//     const id = sendOrder({ type: "pepperoni", price: 120 });
 
-//     expect(typeof id).toBe("number");
-//     expect(Number.isInteger(id)).toBe(true);
-//     expect(id).toBeGreaterThanOrEqual(0);
-//     expect(id).toBeLessThan(1000);
-//   });
+  test("prepareOrder returns a valid ticket number", () => {
+    const drink = createCoffee("espresso");
+    const ticketNumber = prepareOrder(drink);
+    expect(typeof ticketNumber).toBe("number");
+    expect(Number.isInteger(ticketNumber)).toBe(true);
+    expect(ticketNumber).toBeGreaterThanOrEqual(0);
+    expect(ticketNumber).toBeLessThan(1000);
+  });
 
-//   test("orderPizza returns true for a valid pizza", () => {
-//     const result = orderPizza("pepperoni");
-
-//     expect(result).toBe(true);
-//   });
-// });
-
+  test("orderDrink returns true for a valid drink order", () => {
+    const result = orderDrink("cappuccino");
+    expect(result).toBe(true);
+  });
+});
 
 //integration testing --
-// import { orderPizza } from "./pizzashop";
-// import { describe, test, expect } from "vitest";
 
-// describe("Pizza Shop Integration Test", () => {
-//   test("should successfully complete a full pizza order", () => {
-//     const result = orderPizza("margherita");
-//     expect(result).toBe(true);
-//   });
-// });
+describe("Coffee Shop Integration Test", () => {
+  test("should successfully complete a full coffee order", () => {
+    const result = orderDrink("latte");
+    expect(result).toBe(true);
+  });
+});
